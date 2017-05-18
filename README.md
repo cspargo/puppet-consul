@@ -6,12 +6,16 @@
 
 ## Compatibility
 
+**WARNING**: Backwards incompatible changes happen in order to more easily support
+new versions of consul. Pin to the version that works for your setup!
+
 | Consul Version   | Recommended Puppet Module Version   |
 | ---------------- | ----------------------------------- |
-| >= 0.6.0         | latest                              |
+| >= 0.8.0         | latest                              |
+| 0.7.0            | <= 2.1.1                            |
+| 0.6.0            | <= 2.1.1                            |
 | 0.5.x            | 1.0.3                               |
 | 0.4.x            | 0.4.6                               |
-| 0.3.x            | 0.3.0                               |
 
 ### What This Module Affects
 
@@ -247,6 +251,7 @@ This provider allows you to manage key/value pairs.
 ## Limitations
 
 Depends on the JSON gem, or a modern ruby. (Ruby 1.8.7 is not officially supported)
+Depending on the version of puppetserver deployed it may not be new enough (1.8.0 is too old, 2.0.3 is known to work).
 
 ## Consul Template
 
