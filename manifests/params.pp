@@ -53,27 +53,7 @@ class consul::params {
 
   $os = downcase($::kernel)
 
-  if $::osfamily == 'RedHat' {
-    case $::operatingsystem {
-      'Fedora': {
-        if versioncmp($::operatingsystemrelease, '12') < 0 {
-          $init_style = 'init'
-        } else {
-          $init_style = 'systemd'
-        }
-      }
-      'Amazon': {
-        $init_style = 'redhat'
-      }
-      default: {
-        if versioncmp($::operatingsystemrelease, '7.0') < 0 {
-          $init_style = 'redhat'
-        } else {
-          $init_style  = 'systemd'
-        }
-      }
-    }
-  } elsif $::operatingsystem == 'Ubuntu' {
+  if $::operatingsystem == 'Ubuntu' {
     if versioncmp($::operatingsystemrelease, '8.04') < 1 {
       $init_style = 'debian'
     } elsif versioncmp($::operatingsystemrelease, '15.04') < 0 {
@@ -99,8 +79,27 @@ class consul::params {
     }
   } elsif $::operatingsystem == 'Darwin' {
     $init_style = 'launchd'
+  } elsif $::operatingsystem == 'Amazon' {
+    $init_style = 'redhat'
   } elsif $::operatingsystem == 'FreeBSD' {
     $init_style = 'freebsd'
+  } elsif $::osfamily == 'RedHat' {
+    case $::operatingsystem {
+      'Fedora': {
+        if versioncmp($::operatingsystemrelease, '12') < 0 {
+          $init_style = 'init'
+        } else {
+          $init_style = 'systemd'
+        }
+      }
+      default: {
+        if versioncmp($::operatingsystemrelease, '7.0') < 0 {
+          $init_style = 'redhat'
+        } else {
+          $init_style  = 'systemd'
+        }
+      }
+    }
   } else {
     fail('Cannot determine init_style, unsupported OS')
   }
